@@ -1,221 +1,263 @@
-// DOM Elements
-const navToggle = document.querySelector('.nav-toggle');
-const navMenu = document.querySelector('.nav-menu');
-const themeToggle = document.querySelector('.theme-toggle');
-const html = document.documentElement;
-
-// Sample blog post data
-const samplePosts = [
+// Movie data
+const movies = [
     {
-        id: 1,
-        title: "Getting Started with Modern JavaScript",
-        excerpt: "Learn the fundamentals of modern JavaScript and how to use it to build amazing web applications.",
-        author: "Jane Smith",
-        date: "2024-02-15",
-        tag: "JavaScript",
-        image: "https://source.unsplash.com/random/600x400/?javascript",
-        readTime: "5 min read"
+        title: "The Grand Budapest Hotel",
+        year: 2014,
+        rating: 9.2,
+        genre: "Comedy • Drama",
+        description: "Wes Anderson's masterpiece combines visual perfection with heartfelt storytelling in this whimsical tale of friendship and adventure at a legendary European hotel.",
+        image: "images/GrandBudapestHotel.jpeg"
     },
     {
-        id: 2,
-        title: "The Power of CSS Grid",
-        excerpt: "Discover how CSS Grid can revolutionize your web layouts and make responsive design easier than ever.",
-        author: "John Doe",
-        date: "2024-02-10",
-        tag: "CSS",
-        image: "https://source.unsplash.com/random/600x400/?css",
-        readTime: "7 min read"
+        title: "Blade Runner 2049",
+        year: 2017,
+        rating: 8.7,
+        genre: "Sci-Fi • Thriller",
+        description: "A stunning visual sequel that honors its predecessor while forging its own path through questions of humanity and identity in a dystopian future.",
+        image: "images/BladeRunner2049.png"
     },
     {
-        id: 3,
-        title: "Building Scalable APIs with Node.js",
-        excerpt: "Learn best practices for building robust and scalable APIs using Node.js and Express.",
-        author: "Alex Johnson",
-        date: "2024-02-05",
-        tag: "Node.js",
-        image: "https://source.unsplash.com/random/600x400/?nodejs",
-        readTime: "8 min read"
-    },
-    {
-        id: 4,
-        title: "The Future of Web Development",
-        excerpt: "Exploring the latest trends and technologies shaping the future of web development.",
-        author: "Sarah Williams",
-        date: "2024-01-28",
-        tag: "Web Dev",
-        image: "https://source.unsplash.com/random/600x400/?webdevelopment",
-        readTime: "6 min read"
+        title: "Parasite",
+        year: 2019,
+        rating: 9.5,
+        genre: "Thriller • Drama",
+        description: "Bong Joon-ho's thriller masterfully weaves social commentary with suspense in this Palme d'Or winning examination of class divide.",
+        image: "images/Parasite.jpg"
     }
 ];
 
-// Initialize the application
-function init() {
-    setupEventListeners();
-    loadFeaturedPosts();
-    loadRecentPosts();
-    checkThemePreference();
+// Reviews data
+const reviews = [
+    {
+        title: "The Grand Budapest Hotel",
+        rating: 4.5,
+        genre: "Comedy, Drama",
+        date: "August 20, 2025",
+        excerpt: "Wes Anderson's visual masterpiece combines quirky humor with heartfelt storytelling in this tale of a legendary concierge and his protégé.",
+        image: "../images/GrandBudapestHotel.jpeg",
+        link: "#"
+    },
+    {
+        title: "Blade Runner 2049",
+        rating: 5,
+        genre: "Sci-Fi, Thriller",
+        date: "August 15, 2025",
+        excerpt: "Denis Villeneuve's stunning sequel expands the Blade Runner universe with breathtaking visuals and profound questions about humanity.",
+        image: "../images/BladeRunner2049.png",
+        link: "#"
+    },
+    {
+        title: "Parasite",
+        rating: 5,
+        genre: "Thriller, Drama",
+        date: "August 10, 2025",
+        excerpt: "Bong Joon-ho's genre-defying masterpiece about class struggle is as hilarious as it is harrowing, with brilliant performances throughout.",
+        image: "../images/Parasite.jpg",
+        link: "#"
+    }
+];
+
+// Categories data
+const categories = [
+    {
+        icon: "🎭",
+        title: "Classic Cinema",
+        description: "Timeless films that defined cinema history"
+    },
+    {
+        icon: "🚀",
+        title: "Sci-Fi & Fantasy",
+        description: "Exploring otherworldly narratives and futures"
+    },
+    {
+        icon: "😱",
+        title: "Horror & Thriller",
+        description: "Heart-pounding cinema that pushes boundaries"
+    },
+    {
+        icon: "🎬",
+        title: "Independent Films",
+        description: "Unique voices and artistic storytelling"
+    }
+];
+
+// Generate star rating HTML
+function getStarRating(rating) {
+    const fullStars = Math.floor(rating / 2);
+    const halfStar = rating % 2 >= 0.5 ? '½' : '';
+    const emptyStars = 5 - Math.ceil(rating / 2);
+    return '★'.repeat(fullStars) + halfStar + '☆'.repeat(emptyStars);
 }
 
-// Set up event listeners
-function setupEventListeners() {
-    // Mobile menu toggle
-    if (navToggle) {
-        navToggle.addEventListener('click', toggleMobileMenu);
-    }
+// Render movies
+function renderMovies() {
+    const moviesContainer = document.getElementById('featured-movies');
+    if (!moviesContainer) return;
+
+    moviesContainer.innerHTML = movies.map(movie => {
+        // Ensure the image path is correct based on the current page
+        const imagePath = movie.image.startsWith('/') ? 
+            movie.image : 
+            `../${movie.image}`;
+            
+        return `
+        <article class="movie-card">
+            <div class="movie-poster">
+                <img src="${imagePath}" alt="${movie.title}" onerror="this.onerror=null; this.src='${imagePath.replace('../', '')}'">
+            </div>
+            <div class="movie-info">
+                <div class="movie-meta">
+                    <div class="movie-rating">
+                        ${'★'.repeat(Math.floor(movie.rating / 2))}${movie.rating % 2 >= 0.5 ? '½' : ''}
+                        <span>${movie.rating}/10</span>
+                    </div>
+                    <div class="movie-year">${movie.year}</div>
+                </div>
+                <h3 class="movie-title">${movie.title}</h3>
+                <div class="movie-genre">${movie.genre}</div>
+                <p class="movie-description">${movie.description}</p>
+                <a href="#" class="read-more">Read Full Review</a>
+            </div>
+        </article>`;
+    }).join('');
+}
+
+// Render reviews
+function renderReviews() {
+    const reviewsContainer = document.getElementById('reviews-container');
+    if (!reviewsContainer) return;
+
+    reviewsContainer.innerHTML = reviews.map(review => {
+        // Ensure the image path is correct based on the current page
+        const imagePath = review.image.startsWith('/') ? 
+            review.image : 
+            `../${review.image}`;
+            
+        return `
+        <article class="review-card">
+            <div class="review-image">
+                <img src="${imagePath}" alt="${review.title}" onerror="this.onerror=null; this.src='${imagePath.replace('../', '')}'">
+            </div>
+            <div class="review-content">
+                <div class="review-meta">
+                    <span class="review-genre">${review.genre}</span>
+                    <span class="review-date">${review.date}</span>
+                    <div class="review-rating">
+                        ${'★'.repeat(Math.floor(review.rating))}${review.rating % 1 === 0.5 ? '½' : ''}
+                        <span>${review.rating}/5</span>
+                    </div>
+                </div>
+                <h2 class="review-title">${review.title}</h2>
+                <p class="review-excerpt">${review.excerpt}</p>
+                <a href="${review.link}" class="read-more">Read Full Review</a>
+            </div>
+        </article>`;
+    }).join('');
+}
+
+// Render categories
+function renderCategories() {
+    const categoriesContainer = document.getElementById('categories');
+    if (!categoriesContainer) return;
+
+    categoriesContainer.innerHTML = categories.map(category => `
+        <div class="category-card">
+            <span class="category-icon">${category.icon}</span>
+            <h3>${category.title}</h3>
+            <p>${category.description}</p>
+        </div>
+    `).join('');
+}
+
+// Setup theme toggle
+function setupThemeToggle() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (!themeToggle) return;
+
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
     
-    // Theme toggle
-    if (themeToggle) {
-        themeToggle.addEventListener('click', toggleTheme);
+    if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+        document.body.classList.add('dark-theme');
+        const icon = themeToggle.querySelector('i');
+        if (icon) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
     }
-    
-    // Close mobile menu when clicking on a nav link
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', closeMobileMenu);
+
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+        const icon = themeToggle.querySelector('i');
+        
+        if (document.body.classList.contains('dark-theme')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'light');
+        }
     });
+}
+
+// Setup mobile menu
+function setupMobileMenu() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
     
-    // Newsletter form submission
-    const newsletterForm = document.getElementById('newsletterForm');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', handleNewsletterSubmit);
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a nav link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
     }
 }
 
-// Toggle mobile menu
-function toggleMobileMenu() {
-    navMenu.classList.toggle('active');
-    navToggle.classList.toggle('active');
-    
-    // Toggle body scroll when menu is open
-    if (navMenu.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
-    }
+// Update copyright year
+function updateCopyrightYear() {
+    document.querySelectorAll('#current-year').forEach(element => {
+        element.textContent = new Date().getFullYear();
+    });
 }
 
-// Close mobile menu
-function closeMobileMenu() {
-    navMenu.classList.remove('active');
-    navToggle.classList.remove('active');
-    document.body.style.overflow = '';
+// Initialize the page
+function init() {
+    renderMovies();
+    renderReviews();
+    renderCategories();
+    updateCopyrightYear();
+    setupThemeToggle();
+    setupMobileMenu();
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#' || !targetId.startsWith('#')) return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
 }
 
-// Toggle between light and dark theme
-function toggleTheme() {
-    // Add animation class
-    themeToggle.classList.add('animate');
-    
-    // Toggle theme
-    if (html.getAttribute('data-theme') === 'dark') {
-        html.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-    } else {
-        html.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-    
-    // Remove animation class after animation completes
-    setTimeout(() => {
-        themeToggle.classList.remove('animate');
-    }, 500);
-}
-
-// Check user's theme preference
-function checkThemePreference() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (savedTheme === null && prefersDark)) {
-        html.setAttribute('data-theme', 'dark');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-    } else {
-        html.removeAttribute('data-theme');
-        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-    }
-}
-
-// Load featured posts
-function loadFeaturedPosts() {
-    const featuredPostsContainer = document.getElementById('featuredPosts');
-    if (!featuredPostsContainer) return;
-    
-    const featuredPosts = samplePosts.slice(0, 3); // Get first 3 posts as featured
-    
-    const postsHTML = featuredPosts.map(post => `
-        <article class="post-card">
-            <img src="${post.image}" alt="${post.title}" class="post-image">
-            <div class="post-content">
-                <div class="post-meta">
-                    <span class="post-tag">${post.tag}</span>
-                    <span>${formatDate(post.date)}</span>
-                    <span>${post.readTime}</span>
-                </div>
-                <h3 class="post-title">${post.title}</h3>
-                <p class="post-excerpt">${post.excerpt}</p>
-                <a href="pages/blog-post.html?id=${post.id}" class="btn-text">Read More</a>
-            </div>
-        </article>
-    `).join('');
-    
-    featuredPostsContainer.innerHTML = postsHTML;
-}
-
-// Load recent posts
-function loadRecentPosts() {
-    const recentPostsContainer = document.getElementById('recentPosts');
-    if (!recentPostsContainer) return;
-    
-    const recentPosts = [...samplePosts].sort((a, b) => new Date(b.date) - new Date(a.date));
-    
-    const postsHTML = recentPosts.map(post => `
-        <article class="recent-post">
-            <div class="recent-post-image">
-                <img src="${post.image}" alt="${post.title}">
-            </div>
-            <div class="recent-post-content">
-                <div class="post-meta">
-                    <span class="post-tag">${post.tag}</span>
-                    <span>${formatDate(post.date)}</span>
-                </div>
-                <h3 class="post-title">${post.title}</h3>
-                <p class="post-excerpt">${post.excerpt}</p>
-                <a href="pages/blog-post.html?id=${post.id}" class="btn-text">Read More</a>
-            </div>
-        </article>
-    `).join('');
-    
-    recentPostsContainer.innerHTML = postsHTML;
-}
-
-// Format date to a more readable format
-function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-}
-
-// Handle newsletter form submission
-function handleNewsletterSubmit(e) {
-    e.preventDefault();
-    const emailInput = e.target.querySelector('input[type="email"]');
-    const email = emailInput.value.trim();
-    
-    if (validateEmail(email)) {
-        // In a real app, you would send this to your server
-        alert('Thank you for subscribing to our newsletter!');
-        emailInput.value = '';
-    } else {
-        alert('Please enter a valid email address.');
-    }
-}
-
-// Validate email format
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
-
-// Initialize the app when the DOM is fully loaded
+// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', init);

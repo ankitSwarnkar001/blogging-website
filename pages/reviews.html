@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Reviews | Ank's Reviews</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="../index.html" class="logo">Ank's Reviews</a>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="../index.html">Home</a></li>
+                <li class="nav-item"><a href="reviews.html" class="active">Reviews</a></li>
+                <li class="nav-item"><a href="categories.html">Categories</a></li>
+                <li class="nav-item"><a href="about.html">About</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search...">
+                <button class="search-toggle"><i class="fas fa-search"></i></button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="reviews-page">
+        <section class="page-header">
+            <div class="container">
+                <h1>Latest Reviews</h1>
+                <p>Fresh takes on the latest films and hidden gems</p>
+            </div>
+        </section>
+
+        <section class="reviews-grid">
+            <div class="container">
+                <!-- Review cards will be dynamically inserted here -->
+                <div id="reviews-container" class="reviews-container">
+                    <!-- Reviews will be loaded here by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>About Ank's Reviews</h3>
+                    <p>Your go-to destination for honest and insightful movie reviews across all genres.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul style="list-style-type: none;">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="reviews.html">Reviews</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Letterboxd"><i class="fas fa-film"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year">2025</span> Ank's Reviews. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    
+</body>
+</html>
