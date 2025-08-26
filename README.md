@@ -1,6 +1,6 @@
-# BlogSphere - A Modern Blogging Platform
+# Ank's Review - A Modern Blogging Platform
 
-Welcome to BlogSphere, a clean, responsive, and modern blogging website built with HTML5, CSS3, and vanilla JavaScript. This project serves as a frontend template that can be easily integrated with a backend system.
+Welcome to Ank's Review, a clean, responsive, and modern blogging website built with HTML5, CSS3, and JavaScript. This project serves as a frontend template that can be easily integrated with a backend system.
 
 ## Features
 
@@ -25,8 +25,8 @@ blogging-website/
 ├── images/             # Image assets
 └── pages/
     ├── about.html      # About page
-    ├── contact.html    # Contact page
-    └── blog-post.html  # Blog post template
+    ├── Review.html     # Review page
+    └── Category.html   # Category template
 ```
 
 ## Getting Started
